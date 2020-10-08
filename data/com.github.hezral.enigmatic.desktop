@@ -1,11 +1,11 @@
 [Desktop Entry]
-Name=Inspektor
-GenericName=Inspektor
+Name=engimatic
+GenericName=engimatic
 Comment=View additional metadata for files
 Categories=Utility;
-Exec=com.github.hezral.inspektor
-Icon=com.github.hezral.inspektor
+Exec=com.github.hezral.engimatic
+Icon=com.github.hezral.engimatic
 Terminal=false
 Type=Application
-X-GNOME-Gettext-Domain=com.github.hezral.inspektor
+X-GNOME-Gettext-Domain=com.github.hezral.engimatic
 Keywords=Python;
