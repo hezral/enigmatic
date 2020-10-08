@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2020 Adi Hezraln <hezral@gmail.com> -->
 <component type="desktop">
-  <id>com.github.hezral.engimatic</id>
+  <id>com.github.hezral.enigmatic</id>
   <metadata_license>CC0</metadata_license>
   <project_license>GPL-3.0+</project_license>
-  <name>engimatic</name>
+  <name>enigmatic</name>
   <summary>View and export your files metadata easily</summary>
   <developer_name>Adi Hezral</developer_name>
   <description>
@@ -16,12 +16,12 @@
   </description>
 
   <provides>
-      <binary>com.github.hezral.engimatic</binary>
+      <binary>com.github.hezral.enigmatic</binary>
   </provides>
 
-  <url type="homepage">https://github.com/hezral/engimatic</url>
-  <url type="help">https://github.com/hezral/engimatic/issues</url>
-  <url type="bugtracker">https://github.com/hezral/engimatic/issues/labels/bug</url>
+  <url type="homepage">https://github.com/hezral/enigmatic</url>
+  <url type="help">https://github.com/hezral/enigmatic/issues</url>
+  <url type="bugtracker">https://github.com/hezral/enigmatic/issues/labels/bug</url>
 
 
 

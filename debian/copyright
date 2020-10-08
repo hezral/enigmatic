@@ -1,6 +1,6 @@
 Format: http://dep.debian.net/deps/dep5
-Upstream-Name: engimatic
-Source: https://github.com/hezral/engimatic
+Upstream-Name: enigmatic
+Source: https://github.com/hezral/enigmatic
 
 Files: *
 Copyright: 2017 Adi Hezral <hezral@gmail.com>

@@ -1,11 +1,11 @@
 [Desktop Entry]
-Name=engimatic
-GenericName=engimatic
+Name=enigmatic
+GenericName=enigmatic
 Comment=View additional metadata for files
 Categories=Utility;
-Exec=com.github.hezral.engimatic
-Icon=com.github.hezral.engimatic
+Exec=com.github.hezral.enigmatic
+Icon=com.github.hezral.enigmatic
 Terminal=false
 Type=Application
-X-GNOME-Gettext-Domain=com.github.hezral.engimatic
+X-GNOME-Gettext-Domain=com.github.hezral.enigmatic
 Keywords=Python;
