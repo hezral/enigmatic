@@ -19,4 +19,4 @@ Depends: ${python3:Depends},
          python3-pip
 Description: Engimatic
  Safe keep your secrets and passwords by splitting it to family and friends
- and recover it with just a few of the parts.
+ and recover it with just a few of the parts
