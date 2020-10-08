@@ -15,8 +15,7 @@ Architecture: any
 Depends: ${python3:Depends},
          ${misc:Depends},
          python3,
-         python3-gi,
-         python3-pip
+         python3-gi
 Description: enigmatic
  Safe keep your secrets and passwords by splitting it to family and friends
  and recover it with just a few of the parts
