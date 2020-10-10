@@ -1,0 +1,80 @@
+/*
+ * Copyright (c) 2020 - Adi Hezral (https://github.com/hezral)
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public
+ * License as published by the Free Software Foundation; either
+ * version 2 of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public
+ * License along with this program; if not, write to the
+ * Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301 USA
+ *
+ * Authored by: Adi Hezral <hezral@gmail.com>
+ */
+ 
+ /* @define-color base_color #131315; */
+
+
+ /* headerbar > label:backdrop {
+    color: gray;
+}
+    
+headerbar > label {
+    color: white;
+} */
+
+headerbar > label {
+    letter-spacing: 6px;
+    font-weight: bold;
+    padding-top: 1px;
+    padding-right: 8px;
+}
+
+headerbar {
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 3px;
+}
+
+.title-button {
+    border: none;
+    box-shadow: none;
+    font-weight: bold;
+    letter-spacing: 6px;
+    padding-right: 8px;
+    background: none;
+}
+    
+.title-button > label {
+    padding-top: 2px;
+}
+
+.stack-button {
+    border: none;
+    box-shadow: none;
+    font-weight: bold;
+    letter-spacing: 6px;
+    background: none;
+}
+
+.stack-button label {
+    margin-top: 6px;
+}
+
+.stack-button:hover image {
+    animation: float 2s ease-in-out infinite;
+}
+
+
+@keyframes float {
+    0% {-gtk-icon-transform: translateY(0px);}
+    50% {-gtk-icon-transform: translateY(-5px);}
+    100% {-gtk-icon-transform: translateY(0px);}
+}
