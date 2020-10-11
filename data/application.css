@@ -78,3 +78,72 @@ headerbar {
     50% {-gtk-icon-transform: translateY(-5px);}
     100% {-gtk-icon-transform: translateY(0px);}
 }
+
+.back-to-main-button {
+    border-radius: 50%;
+}
+
+
+/*================================*/
+
+/* notebook {
+border: none;
+background: shaded_base;
+border-bottom-right-radius: 4px;
+border-bottom-left-radius: 4px;
+}
+
+tab:first-child {
+border: none;
+box-shadow: none;
+border-top-right-radius: 0px;
+border-top-left-radius: 0px;
+border-bottom-left-radius: 4px;
+}
+
+tab:last-child {
+border: none;
+box-shadow: none;
+border-top-right-radius: 0px;
+border-top-left-radius: 0px;
+border-bottom-right-radius: 4px;
+}
+
+notebook > header {
+border: none;
+background-image: none;
+border-bottom-right-radius: 4px;
+border-bottom-left-radius: 4px;
+}
+
+tab:checked {
+font-weight: bold;
+background: @theme_base_color;
+}
+
+tab {
+text-shadow: none;
+}
+
+notebook.frame {
+background:  @theme_base_color;
+}
+
+tabs {
+border-bottom-right-radius: 4px;
+border-bottom-left-radius: 4px;
+background: shade(@theme_base_color, 0.9);
+background-image: none;
+}
+
+headerbar {
+background: @theme_base_color;
+}
+
+tab:hover {
+-gtk-icon-effect: highlight;
+} */
+
+
+
+    

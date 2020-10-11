@@ -42,7 +42,7 @@ class EnigmaticWindow(Gtk.ApplicationWindow):
         # setattr(geometry, 'min_width', width)
         # self.set_geometry_hints(None, geometry, Gdk.WindowHints.MIN_SIZE)
         self.props.title = AppAttributes.application_name
-        self.props.border_width = 24
+        # self.props.border_width = 24
         self.props.resizable = False
         self.get_style_context().add_class("rounded")
         #self.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT)
@@ -74,15 +74,25 @@ class EnigmaticWindow(Gtk.ApplicationWindow):
         share = ShareView()
         recover = RecoverView()
 
+        #---- notebook -----#
+        notebook = Gtk.Notebook()
+        notebook.props.tab_pos = Gtk.PositionType.BOTTOM
+        notebook.append_page(share, Gtk.Label("SHARE"))
+        notebook.append_page(recover, Gtk.Label("RECOVER"))
+        notebook.child_set_property(share, "tab-expand", True)
+        notebook.child_set_property(recover, "tab-expand", True)
+
         #---- stack -----#
         self.stack = Gtk.Stack()
         self.stack.props.transition_type = Gtk.StackTransitionType.CROSSFADE
         self.stack.add_named(main, "main")
-        self.stack.add_named(share, "share")
-        self.stack.add_named(recover, "recover")
+        self.stack.add_named(notebook, "notebook")
+        # self.stack.add_named(share, "share")
+        # self.stack.add_named(recover, "recover")
         self.stack.set_visible_child(main)
-        self.stack.set_visible_child(share)
-        self.stack.set_visible_child(recover)
+        self.stack.set_visible_child(notebook)
+        # self.stack.set_visible_child(share)
+        # self.stack.set_visible_child(recover)
 
         #---- layout -----#
         layout = Gtk.Grid()
@@ -128,16 +138,20 @@ class MainView(Gtk.Grid):
 
         #---- grid -----#
         self.props.expand = True
-        self.attach(GetStartedButton, 0, 1, 2, 1)
-        self.attach(self.ShareStackButton, 0, 2, 1, 1)
+        self.attach(self.ShareStackButton, 0, 1, 1, 1)
         self.attach_next_to(self.RecoverStackButton, self.ShareStackButton, 1, 1, 1)
+        self.attach(GetStartedButton, 0, 2, 2, 1)
 
     def toggle_stack(self, widget):
         stack = self.get_parent()
+        stack_children = stack.get_child_by_name("notebook")
+        stack.set_visible_child_full("notebook",Gtk.StackTransitionType.CROSSFADE)
         if widget.get_label() == "SHARE":
-            stack.set_visible_child_full("share",Gtk.StackTransitionType.CROSSFADE)
+            # stack.set_visible_child_full("share",Gtk.StackTransitionType.CROSSFADE)
+            stack_children.set_current_page(0)
         else:
-            stack.set_visible_child_full("recover",Gtk.StackTransitionType.CROSSFADE)
+            # stack.set_visible_child_full("recover",Gtk.StackTransitionType.CROSSFADE)
+            stack_children.set_current_page(1)
 
 #------------------CLASS-SEPARATOR------------------#
 
@@ -155,6 +169,11 @@ class ShareView(Gtk.Grid):
         ShareStackHeader.attach(ShareStackSubtitle, 1, 2, 1, 1)
 
         BackButton = Gtk.Button(image=Gtk.Image().new_from_icon_name(icon_name='go-previous-symbolic', size=Gtk.IconSize.LARGE_TOOLBAR))
+        BackButton.props.expand = False
+        BackButton.props.valign = Gtk.Align.START
+        BackButton.props.halign = Gtk.Align.START
+        BackButton.set_size_request(40, 40)
+        BackButton.get_style_context().add_class("back-to-main-button")
         BackButton.connect("clicked", self.on_backbutton_clicked)
 
         SecretHeader = Gtk.Label("Secrets or Passphrase to share")
@@ -213,7 +232,10 @@ class ShareView(Gtk.Grid):
         print(locals())
 
     def on_backbutton_clicked(self, widget):
-        stack = self.get_parent()
+        notebook = self.get_parent()
+        stack = notebook.get_parent()
+        # print(parent)
+        # stack = self.get_parent()
         stack.set_visible_child_full("main",Gtk.StackTransitionType.CROSSFADE)
 
 
