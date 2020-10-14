@@ -32,21 +32,6 @@ class EnigmaticWindow(Gtk.ApplicationWindow):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
-        #---- window -----#
-        width = 720
-        height = 576
-        self.set_size_request(width, height)
-        self.set_default_size(width, height)
-        # geometry = Gdk.Geometry()
-        # setattr(geometry, 'min_height', height)
-        # setattr(geometry, 'min_width', width)
-        # self.set_geometry_hints(None, geometry, Gdk.WindowHints.MIN_SIZE)
-        self.props.title = AppAttributes.application_name
-        # self.props.border_width = 24
-        self.props.resizable = False
-        self.get_style_context().add_class("rounded")
-        #self.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT)
-
         #---- header widgets -----#
         TitleLabel = Gtk.Button(label="ENIGMATIC")
         TitleLabel.get_style_context().add_class("title-button")
@@ -69,18 +54,18 @@ class EnigmaticWindow(Gtk.ApplicationWindow):
         HeaderBar.get_style_context().add_class("default-decoration")
         HeaderBar.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT)
     
+        #---- icons -----#
+        icons16 = ModuleIcon(16)
+        icons24 = ModuleIcon(24)
+        icons32 = ModuleIcon(32)
+        icons48 = ModuleIcon(48)
+        icons96 = ModuleIcon(96)
+
         #---- views -----#
-        main = MainView()
+        main = MainView(icons=icons96)
         share = ShareView()
         recover = RecoverView()
-
-        #---- notebook -----#
-        notebook = Gtk.Notebook()
-        notebook.props.tab_pos = Gtk.PositionType.BOTTOM
-        notebook.append_page(share, Gtk.Label("SHARE"))
-        notebook.append_page(recover, Gtk.Label("RECOVER"))
-        notebook.child_set_property(share, "tab-expand", True)
-        notebook.child_set_property(recover, "tab-expand", True)
+        notebook = NotebookView(pages=(share, recover), icons=icons32)
 
         #---- stack -----#
         self.stack = Gtk.Stack()
@@ -101,14 +86,50 @@ class EnigmaticWindow(Gtk.ApplicationWindow):
         layout.props.expand = True
 
         #---- window -----#
+
+
+        self.props.title = AppAttributes.application_name
+        # self.props.border_width = 24
+        self.props.resizable = False
+        self.get_style_context().add_class("rounded")
+        #self.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT)
+        width = 800
+        height = 600
+        self.set_size_request(width, height)
+        #self.set_default_size(width, height)
+        # geometry = Gdk.Geometry()
+        # setattr(geometry, 'max_height', height)
+        # setattr(geometry, 'max_width', width)
+        # self.set_geometry_hints(None, geometry, Gdk.WindowHints.MAX_SIZE)
+
         self.set_titlebar(HeaderBar)
         self.add(layout)
         self.show_all()
 
+    def on_notebook_select_page(self, notebook, page, page_index):
+        print(locals())
+
+#------------------CLASS-SEPARATOR------------------#
+
+class ModuleIcon():
+    def __init__(self, size, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.ShareIcon = Gtk.Image().new_from_icon_name("com.github.hezral.inspektor", Gtk.IconSize.DIALOG)
+        self.RecoverIcon = Gtk.Image().new_from_icon_name("internet-chat", Gtk.IconSize.DIALOG)
+        self.ShareIcon.set_pixel_size(size)
+        self.RecoverIcon.set_pixel_size(size)
+
+    def resize(self, size):
+        self.ShareIcon.set_pixel_size(size)
+        self.RecoverIcon.set_pixel_size(size)
+
+
+
 #------------------CLASS-SEPARATOR------------------#
 
 class MainView(Gtk.Grid):
-    def __init__(self, *args, **kwargs):
+    def __init__(self, icons, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
         #---- get started -----#
@@ -116,20 +137,21 @@ class MainView(Gtk.Grid):
         GetStartedButton = Gtk.Button(label="Quick Start Guide", image=GetStartedImage)
         GetStartedButton.props.hexpand = True
         GetStartedButton.props.always_show_image = True
+        GetStartedButton.props.relief = Gtk.ReliefStyle.NONE
         
         #---- stack buttons -----#
-        ShareStackImage = Gtk.Image().new_from_icon_name("com.github.hezral.inspektor", Gtk.IconSize.DIALOG)
-        ShareStackImage.set_pixel_size(96)
-        self.ShareStackButton = Gtk.Button(label="SHARE", image=ShareStackImage)
+        # ShareStackImage = Gtk.Image().new_from_icon_name("com.github.hezral.inspektor", Gtk.IconSize.DIALOG)
+        # ShareStackImage.set_pixel_size(96)
+        self.ShareStackButton = Gtk.Button(label="SHARE", image=icons.ShareIcon)
         self.ShareStackButton.props.always_show_image = True
         self.ShareStackButton.props.image_position = Gtk.PositionType.TOP
         self.ShareStackButton.props.expand = True
         self.ShareStackButton.connect("clicked", self.toggle_stack)
         self.ShareStackButton.get_style_context().add_class("stack-button")
 
-        RecoverStackImage = Gtk.Image().new_from_icon_name("internet-chat", Gtk.IconSize.DIALOG)
-        RecoverStackImage.set_pixel_size(96)
-        self.RecoverStackButton = Gtk.Button(label="RECOVER", image=RecoverStackImage)
+        # RecoverStackImage = Gtk.Image().new_from_icon_name("internet-chat", Gtk.IconSize.DIALOG)
+        # RecoverStackImage.set_pixel_size(96)
+        self.RecoverStackButton = Gtk.Button(label="RECOVER", image=icons.RecoverIcon)
         self.RecoverStackButton.props.always_show_image = True
         self.RecoverStackButton.props.image_position = Gtk.PositionType.TOP
         self.RecoverStackButton.props.expand = True
@@ -138,6 +160,7 @@ class MainView(Gtk.Grid):
 
         #---- grid -----#
         self.props.expand = True
+        self.get_style_context().add_class("mainview")
         self.attach(self.ShareStackButton, 0, 1, 1, 1)
         self.attach_next_to(self.RecoverStackButton, self.ShareStackButton, 1, 1, 1)
         self.attach(GetStartedButton, 0, 2, 2, 1)
@@ -147,17 +170,66 @@ class MainView(Gtk.Grid):
         stack_children = stack.get_child_by_name("notebook")
         stack.set_visible_child_full("notebook",Gtk.StackTransitionType.CROSSFADE)
         if widget.get_label() == "SHARE":
-            # stack.set_visible_child_full("share",Gtk.StackTransitionType.CROSSFADE)
             stack_children.set_current_page(0)
         else:
-            # stack.set_visible_child_full("recover",Gtk.StackTransitionType.CROSSFADE)
             stack_children.set_current_page(1)
 
 #------------------CLASS-SEPARATOR------------------#
 
+class NotebookView(Gtk.Notebook):
+    def __init__(self, pages, icons, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.props.tab_pos = Gtk.PositionType.BOTTOM
+        self.append_page(pages[0], Gtk.Label(pages[0].get_name()))
+        self.append_page(pages[1], Gtk.Label(pages[1].get_name()))
+        self.child_set_property(pages[0], "tab-expand", True)
+        self.child_set_property(pages[1], "tab-expand", True)
+
+
+
+        page0label = self.generate_page_label(pages[0].get_name(), icons.ShareIcon)
+        page0label.connect("clicked", self.on_page0)
+        page1label = self.generate_page_label(pages[1].get_name(), icons.RecoverIcon)
+        page1label.connect("clicked", self.on_page1)
+
+        
+
+        self.set_tab_label(pages[0], page0label)        
+        self.set_tab_label(pages[1], page1label)
+        # self.connect("switch_page", self.on_notebook_select_page)
+
+    def generate_page_label(self, text, icon):
+        button = Gtk.Button(label=text, image=icon)
+        button.props.relief = Gtk.ReliefStyle.NONE
+        button.props.always_show_image = True
+        button.set_focus_on_click(False)
+        button.get_style_context().add_class("notebook-tab-label")
+
+        # Gtk.Button consists of Gtk.Alignment > Gtk.Box > Gtk.Image + Gtk.Label
+        # use get_child and get_children to access the inner widgets
+        button_label = button.get_child().get_children()[0].get_children()[1]
+        button_label.props.valign = Gtk.Align.CENTER
+
+        return button
+
+    def on_page0(self, button):
+        self.set_current_page(0)
+
+    def on_page1(self, button):
+        self.set_current_page(1)
+
+    def on_notebook_select_page(self, notebook, page, page_index):
+        print(locals())
+
+#------------------CLASS-SEPARATOR------------------#
+
+
 class ShareView(Gtk.Grid):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.props.name = "SHARE"
 
         #---- stack header -----#
         ShareStackImage = Gtk.Image().new_from_icon_name("com.github.hezral.inspektor", Gtk.IconSize.DIALOG)
@@ -207,6 +279,7 @@ class ShareView(Gtk.Grid):
         GoButton = Gtk.Button(image=Gtk.Image().new_from_icon_name(icon_name='emblem-default', size=Gtk.IconSize.DIALOG))
         GoButton.connect("clicked", self.on_gobutton_clicked)
 
+        self.get_style_context().add_class("shareview")
         self.attach(SecretHeader, 0, 1, 4, 1)
         self.attach(SecretEntry, 0, 2, 4, 1)
         self.attach(ShareSplitHeader, 0, 3, 2, 1)
@@ -244,6 +317,8 @@ class ShareView(Gtk.Grid):
 class RecoverView(Gtk.Grid):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.props.name = "RECOVER"
         
 
         ShareSplitHeader = Gtk.Label("How many did you split into")
@@ -257,6 +332,7 @@ class RecoverView(Gtk.Grid):
         GoButton = Gtk.Button(image=Gtk.Image().new_from_icon_name(icon_name='emblem-default', size=Gtk.IconSize.DIALOG))
         GoButton.connect("clicked", self.on_gobutton_clicked)
 
+        self.get_style_context().add_class("recoverview")
         self.add(ShareSplitHeader)
         self.add(ShareSplit)
         self.add(RecoverSplitHeader)

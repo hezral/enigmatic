@@ -30,17 +30,17 @@ headerbar > label {
     color: white;
 } */
 
+headerbar {
+    padding-left: 7px;
+    padding-right: 7px;
+    padding-top: 3px;
+}
+
 headerbar > label {
     letter-spacing: 6px;
     font-weight: bold;
     padding-top: 1px;
     padding-right: 8px;
-}
-
-headerbar {
-    padding-left: 7px;
-    padding-right: 7px;
-    padding-top: 3px;
 }
 
 .title-button {
@@ -69,6 +69,7 @@ headerbar {
 }
 
 .stack-button:hover image {
+    /* -gtk-icon-effect: highlight; */
     animation: float 2s ease-in-out infinite;
 }
 
@@ -83,66 +84,68 @@ headerbar {
     border-radius: 50%;
 }
 
+.mainview {
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
 
 /*================================*/
 
-/* notebook {
-border: none;
-background: shaded_base;
-border-bottom-right-radius: 4px;
-border-bottom-left-radius: 4px;
+headerbar, notebook.frame, .mainview, .shareview, .recoverview {
+    background: @theme_base_color;
 }
 
-tab:first-child {
-border: none;
-box-shadow: none;
-border-top-right-radius: 0px;
-border-top-left-radius: 0px;
-border-bottom-left-radius: 4px;
-}
 
-tab:last-child {
-border: none;
-box-shadow: none;
-border-top-right-radius: 0px;
-border-top-left-radius: 0px;
-border-bottom-right-radius: 4px;
+notebook {
+    border: none;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 
 notebook > header {
-border: none;
-background-image: none;
-border-bottom-right-radius: 4px;
-border-bottom-left-radius: 4px;
-}
-
-tab:checked {
-font-weight: bold;
-background: @theme_base_color;
-}
-
-tab {
-text-shadow: none;
-}
-
-notebook.frame {
-background:  @theme_base_color;
+    border: none;
+    background-image: none;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
 }
 
 tabs {
-border-bottom-right-radius: 4px;
-border-bottom-left-radius: 4px;
-background: shade(@theme_base_color, 0.9);
-background-image: none;
+    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: 4px;
+    background: shade(@theme_base_color, 0.9);
+    background-image: none;
 }
 
-headerbar {
-background: @theme_base_color;
+tab {
+    letter-spacing: 6px;
+    font-weight: bold;
+    text-shadow: none;
+    border: none;
+    box-shadow: none;
+    border-top-right-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+tab:first-child {
+    border-bottom-left-radius: 4px;
+}
+
+tab:last-child {
+    border-bottom-right-radius: 4px;
+}
+
+tab:checked {
+    background: @theme_base_color;
 }
 
 tab:hover {
--gtk-icon-effect: highlight;
-} */
+    -gtk-icon-effect: highlight;
+}
+
+.notebook-tab-label {
+    padding: 6px;
+}
+
 
 
 

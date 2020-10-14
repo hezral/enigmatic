@@ -6,7 +6,7 @@ gi.require_version("Gtk", "3.0")
 from gi.repository import Gtk 
   
   
-class MyWindow(Gtk.Window): 
+class MyWindow(Gtk.ApplicationWindow): 
     def __init__(self): 
         Gtk.Window.__init__(self, title ="Geeks for Geeks") 
         self.set_border_width(0) 
@@ -27,12 +27,20 @@ class MyWindow(Gtk.Window):
         self.page1 = Gtk.Box() 
         self.page1.set_border_width(50) 
         self.page1.add(Gtk.Label("Page 1: Welcome to Geeks for Geeks")) 
-        self.notebook.append_page(self.page1, Gtk.Label("Page 1")) 
+
+        revealer1 = Gtk.Revealer()
+        revealer1.add(self.page1)
+
+        self.notebook.append_page(revealer1, Gtk.Label("Page 1")) 
   
         self.page2 = Gtk.Box() 
         self.page2.set_border_width(50) 
         self.page2.add(Gtk.Label("Page 2: A computer science portal for geeks")) 
-        self.notebook.append_page(self.page2, Gtk.Label("Page 2")) 
+
+        revealer2 = Gtk.Revealer()
+        revealer2.add(self.page2)
+
+        self.notebook.append_page(revealer2, Gtk.Label("Page 2")) 
 
         self.notebook.child_set_property(self.page1, "tab-expand", True)
         self.notebook.child_set_property(self.page2, "tab-expand", True)
@@ -47,6 +55,8 @@ class MyWindow(Gtk.Window):
         HeaderBar.get_style_context().add_class("default-decoration")
         HeaderBar.get_style_context().add_class(Gtk.STYLE_CLASS_FLAT)
         self.set_titlebar(HeaderBar)
+
+    
   
   
 win = MyWindow() 

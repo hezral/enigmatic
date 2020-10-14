@@ -1,65 +1,42 @@
-from gi.repository import Gtk, Gio
-# from gi.repository import WebKit
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-HEIGHT = 500
-WIDTH = 800
+from gi.repository import Gtk
 
-class MainWindow(Gtk.Window):
-    def __init__(self):
+def reveal_child(button):
+    if revealer.get_child_revealed():
+        revealer.set_reveal_child(False)
+        label.set_visible(False) # need to set_visible to false on anyy widget that took the space 
+        window.resize(207, 24)
+    else:
+        label.set_visible(True)
+        revealer.set_reveal_child(True)
 
-        Gtk.Window.__init__(self, title="Resolution")
-        self.set_border_width(0)
-        self.set_default_size(WIDTH, HEIGHT)
-
-        hb = Gtk.HeaderBar()
-        hb.props.show_close_button = True
-        hb.props.title = "Resolution"
-        self.set_titlebar(hb)
-
-        button = Gtk.Button()   
-        icon = Gio.ThemedIcon(name="emblem-system-symbolic")
-        image = Gtk.Image.new_from_gicon(icon, 1)
-        button.add(image)
-        button.connect("clicked", self.sidebarShowHide)
-        button.set_focus_on_click(False)
-        hb.pack_start(button)  
-
-        sidebarbox = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=0)
-        toplevelbox = Gtk.Box(orientation=Gtk.Orientation.HORIZONTAL, spacing=0)
-
-        self.add(toplevelbox)
-
-        self.sidebar = Gtk.Box()     
-        toplevelbox.pack_start(self.sidebar, False, False, 0)
-        self.sidebar.add(sidebarbox)
-
-        self.searchentry = Gtk.SearchEntry()
-        self.searchentry.connect("search-changed", self.search_changed)
-        sidebarbox.pack_start(self.searchentry, False, False, 0)
-
-        label = Gtk.Label("Contents Selector")
-        sidebarbox.pack_start(label, True, True, 0)
-
-        scroller = Gtk.ScrolledWindow()
-        content = Gtk.Label("ABC")
-        scroller.add(content)
-        toplevelbox.pack_start(scroller, True, True, 0)
-
-        # content.open("/home/oliver/resolution/placeholder.html")
-
-    def sidebarShowHide(self, button):
-        if self.sidebar.get_visible():
-            self.sidebar.hide ()
-        else:
-            self.sidebar.show ()
-
-    def search_changed(self, searchentry):
-        pass
+    print(window.get_size())
 
 
 
 
-win = MainWindow()
-win.connect("delete-event", Gtk.main_quit)  
-win.show_all()
+window = Gtk.Window()
+window.connect("destroy", Gtk.main_quit)
+
+print(window.get_size())
+
+grid = Gtk.Grid()
+window.add(grid)
+
+revealer = Gtk.Revealer()
+
+grid.attach(revealer, 0, 1, 1, 1)
+
+label = Gtk.Label("Label contained in a Revealer widget")
+revealer.add(label)
+
+button = Gtk.Button("Reveal")
+button.props.hexpand = True
+button.connect("clicked", reveal_child)
+grid.attach(button, 0, 0, 1, 1)
+
+window.show_all()
+
 Gtk.main()
