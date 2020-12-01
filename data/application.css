@@ -22,13 +22,7 @@
  /* @define-color base_color #131315; */
 
 
- /* headerbar > label:backdrop {
-    color: gray;
-}
-    
-headerbar > label {
-    color: white;
-} */
+/*----- headerbar -----*/
 
 headerbar {
     padding-left: 7px;
@@ -54,6 +48,10 @@ headerbar > label {
     
 .title-button > label {
     padding-top: 2px;
+}
+
+.title-button:hover {
+    padding-top: 0px;
 }
 
 .stack-button {
@@ -124,6 +122,7 @@ tab {
     box-shadow: none;
     border-top-right-radius: 0px;
     border-top-left-radius: 0px;
+    color: white;
 }
 
 tab:first-child {
@@ -138,12 +137,13 @@ tab:checked {
     background: @theme_base_color;
 }
 
-tab:hover {
+/* tab:hover {
     -gtk-icon-effect: highlight;
-}
+} */
 
 .notebook-tab-label {
     padding: 6px;
+    color: white;
 }
 
 

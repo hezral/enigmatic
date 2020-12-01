@@ -26,13 +26,13 @@ from gi.repository import Gtk
 class AppAttributes:
     application_name = "enigmatic"
     application_id = "com.github.hezral.enigmatic"
-    application_description = " Safe keep your secrets and passwords by splitting it to family and friends and recover it with just a few of the parts"
+    application_description = "Safe keep your secrets and passwords by\nsplitting it to family and friends\nand recover it with just a few of the parts"
     application_version = '1.0'
     about_authors = ["hezral@gmail.com"]
     about_comments = application_description
     about_license_type = Gtk.License.GPL_3_0
-    about_logo_icon_name = "com.github.hezral.enigmatic"
-    about_program_name = application_name
+    about_logo_icon_name = application_id
+    about_program_name = application_name.upper()
     about_version = application_version
     about_website = "https://github.com/hezral/enigmatic"
     about_website_label = "Feedback/Report Bugs at Github"
